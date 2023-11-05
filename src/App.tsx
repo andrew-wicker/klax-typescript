@@ -15,7 +15,8 @@ const testGame: GameTileInfo = {
   title: 'Everdell',
   coverImage:
     'https://cf.geekdo-images.com/fjE7V5LNq31yVEW_yuqI-Q__original/img/HQ1ti16wT9lqja5_h3gUfHUIcVI=/0x0/filters:format(png)/pic3918905.png',
-  description: 'Everdell is fun!',
+  description:
+    'Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun!',
   minPlayers: 1,
   maxPlayers: 4,
   yearPublished: '2018',

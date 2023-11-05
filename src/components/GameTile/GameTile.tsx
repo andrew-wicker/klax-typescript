@@ -26,7 +26,7 @@ const GameTile: React.FC<GameTileProps> = ({
       <div className="gametile-info">
         <h1>{title}</h1>
         <p>
-          # of Players: {minPlayers} to {maxPlayers}
+          Players: {minPlayers} to {maxPlayers}
         </p>
         <p>Published: {yearPublished}</p>
         <div className="gametile-description">

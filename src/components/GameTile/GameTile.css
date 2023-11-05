@@ -1,0 +1,36 @@
+.gametile {
+  aspect-ratio: 1;
+  background-color: #7f636e;
+  background-size: cover;
+  transition: all 0.4s ease-out;
+  box-shadow: 0px 35px 77px -17px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  color: white;
+  font-family: 'Roboto';
+  border-radius: 20px;
+}
+
+.gametile img {
+  object-fit: cover;
+  transition: all 0.4s ease-out;
+}
+
+.gametile:hover {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.gametile h1 {
+  position: absolute;
+  padding: 30px;
+  font-family: 'Mulish', sans-serif;
+}
+
+.gametile p {
+}
+
+.gametile-description {
+}
+
+.gametile-description p {
+}

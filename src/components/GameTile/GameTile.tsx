@@ -1,15 +1,15 @@
 import React from 'react';
-
-interface CollectionTileProps {
+import './GameTile.css';
+interface GameTileProps {
   title: string;
   coverImage: string;
   description: string;
-  minPlayers: string;
-  maxPlayers: string;
+  minPlayers: number;
+  maxPlayers: number;
   yearPublished: string;
 }
 
-const CollectionTile: React.FC<CollectionTileProps> = ({
+const GameTile: React.FC<GameTileProps> = ({
   title,
   coverImage,
   description,
@@ -18,7 +18,7 @@ const CollectionTile: React.FC<CollectionTileProps> = ({
   yearPublished,
 }) => {
   return (
-    <div className="collection-tile">
+    <div className="gametile">
       <img
         src={coverImage}
         alt={`Box art for the board game titled ${title}`}
@@ -27,11 +27,11 @@ const CollectionTile: React.FC<CollectionTileProps> = ({
       <p>
         # of Players: {minPlayers} to {maxPlayers} | Published: {yearPublished}
       </p>
-      <div className="collection-tile-description">
+      <div className="gametile-description">
         <p>{description}</p>
       </div>
     </div>
   );
 };
 
-export default CollectionTile;
+export default GameTile;

@@ -1,8 +1,8 @@
 import express, { Express } from 'express';
 import path from 'path';
 import cors from 'cors';
-import apiRouter from '..routes/api';
-// import mongoApi from '../routes/mongoApi';
+import apiRouter from './src/backend/routes/api';
+import mongoApi from './src/backend/routes/mongoApi';
 import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import 'dotenv/config';

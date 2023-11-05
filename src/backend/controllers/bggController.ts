@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import xml2js from 'xml2js';
 import fetch from 'node-fetch';
 
@@ -8,15 +8,15 @@ interface ErrorInfo {
   err: unknown;
 }
 
-interface Boardgame {
-  boardGameTitle: string;
-  boardGameCoverImage: string;
-  boardGameThumbnail: string;
-  boardGameDescription: string;
-  boardGameMinPlayers: number;
-  boardGameMaxPlayers: number;
-  boardGameYearPublished: string;
-}
+// interface Boardgame {
+//   boardGameTitle: string;
+//   boardGameCoverImage: string;
+//   boardGameThumbnail: string;
+//   boardGameDescription: string;
+//   boardGameMinPlayers: number;
+//   boardGameMaxPlayers: number;
+//   boardGameYearPublished: string;
+// }
 
 const createErr = (errInfo: ErrorInfo) => {
   const { method, type, err } = errInfo;
@@ -125,7 +125,12 @@ const bggController: {
       );
     }
   },
-  gameSearch: async (gameTitle: string, next: Ne): Promise<any> => {
+  gameSearch: async (
+    req?: Request,
+    res?: Response,
+    next: NextFunction = () => {},
+    gameTitle?: string
+  ): Promise<any> => {
     try {
       const requestPath = `https://boardgamegeek.com/xmlapi2/search?query=${gameTitle}&type=boardgame`;
       const response = await fetch(requestPath);

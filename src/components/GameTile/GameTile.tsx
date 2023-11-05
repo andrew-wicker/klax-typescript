@@ -23,12 +23,15 @@ const GameTile: React.FC<GameTileProps> = ({
         src={coverImage}
         alt={`Box art for the board game titled ${title}`}
       />
-      <h1>{title}</h1>
-      <p>
-        # of Players: {minPlayers} to {maxPlayers} | Published: {yearPublished}
-      </p>
-      <div className="gametile-description">
-        <p>{description}</p>
+      <div className="gametile-info">
+        <h1>{title}</h1>
+        <p>
+          # of Players: {minPlayers} to {maxPlayers}
+        </p>
+        <p>Published: {yearPublished}</p>
+        <div className="gametile-description">
+          <p>{description}</p>
+        </div>
       </div>
     </div>
   );

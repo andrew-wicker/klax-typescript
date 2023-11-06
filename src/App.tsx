@@ -8,7 +8,7 @@ interface GameTileInfo {
   description: string;
   minPlayers: number;
   maxPlayers: number;
-  yearPublished: string;
+  yearPublished: number;
 }
 
 const testGame: GameTileInfo = {
@@ -19,7 +19,7 @@ const testGame: GameTileInfo = {
     'Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun! Everdell is fun!',
   minPlayers: 1,
   maxPlayers: 4,
-  yearPublished: '2018',
+  yearPublished: 2018,
 };
 
 export default function App() {

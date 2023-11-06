@@ -1,3 +1,10 @@
-const mongoApi = () => {};
+import gameController from '../controllers/gameController';
+import express, { Router } from 'express';
+import cors from 'cors';
 
-export default mongoApi;
+const mongoRouter: Router = express.Router();
+
+mongoRouter.use(cors());
+mongoRouter.get('/', gameController.getCollection);
+
+export default mongoRouter;

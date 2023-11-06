@@ -6,7 +6,7 @@ interface GameTileProps {
   description: string;
   minPlayers: number;
   maxPlayers: number;
-  yearPublished: string;
+  yearPublished: number;
 }
 
 const GameTile: React.FC<GameTileProps> = ({

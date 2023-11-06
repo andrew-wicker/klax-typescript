@@ -1,1 +1,2 @@
-export {};
+import mongoose from 'mongoose';
+const { ga };

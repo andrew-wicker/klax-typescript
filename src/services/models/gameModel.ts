@@ -1,15 +1,5 @@
-import mongoose, { Document, Schema } from 'mongoose';
-
-interface IGame extends Document {
-  bggId: number;
-  title: string;
-  coverImage: string;
-  thumbnail: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
-}
+import mongoose, { Schema } from 'mongoose';
+import { IGame } from '../../types';
 
 const gameSchema = new Schema<IGame>({
   bggId: { type: Number, required: true },

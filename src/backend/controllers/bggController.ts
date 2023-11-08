@@ -1,22 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import xml2js from 'xml2js';
 import fetch from 'node-fetch';
-
-interface ErrorInfo {
-  method: string;
-  type: string;
-  err: unknown;
-}
-
-// interface Boardgame {
-//   boardGameTitle: string;
-//   boardGameCoverImage: string;
-//   boardGameThumbnail: string;
-//   boardGameDescription: string;
-//   boardGameMinPlayers: number;
-//   boardGameMaxPlayers: number;
-//   boardGameYearPublished: string;
-// }
+import { BoardGame, ErrorInfo } from '../../types';
 
 const createErr = (errInfo: ErrorInfo) => {
   const { method, type, err } = errInfo;
@@ -103,7 +88,7 @@ const bggController: {
         reqGameDataJson.items.item[0].maxplayers[0].value[0];
       const boardGameYearPublished =
         reqGameDataJson.items.item[0].yearpublished[0].value[0];
-      const boardgame = {
+      const boardgame: BoardGame = {
         boardGameTitle,
         boardGameCoverImage,
         boardGameThumbnail,

@@ -1,13 +1,6 @@
 import React from 'react';
 import './GameTile.css';
-interface GameTileProps {
-  title: string;
-  coverImage: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
-}
+import { GameTileProps } from '../../types';
 
 const GameTile: React.FC<GameTileProps> = ({
   title,

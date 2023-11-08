@@ -1,15 +1,7 @@
 import React from 'react';
 import './App.css';
 import GameTile from './components/GameTile/GameTile';
-
-interface GameTileInfo {
-  title: string;
-  coverImage: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
-}
+import { GameTileInfo } from './types';
 
 const testGame: GameTileInfo = {
   title: 'Everdell',

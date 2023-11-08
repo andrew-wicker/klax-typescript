@@ -1,6 +1,6 @@
 import { SEARCH_GAME, SET_SEARCH_RESULTS } from '../constants/actionTypes';
 
-interface SearchState {
+export interface SearchState {
   isLoading: boolean;
   titleSelection: string[];
 }
@@ -15,7 +15,6 @@ interface SetSearchResultsAction {
 }
 
 type SearchActionTypes = SearchGameAction | SetSearchResultsAction;
-
 const initalState: SearchState = {
   isLoading: false,
   titleSelection: [],

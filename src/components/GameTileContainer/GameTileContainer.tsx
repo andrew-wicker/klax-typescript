@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import GameTile from '../GameTile/GameTile';
 import { useSelector } from 'react-redux';
+import { Game } from '../../types';
 
-interface Game {
-  id: string;
-  title: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
-  coverImage: string;
-}
-
-const CollectionDisplay: React.FC = () => {
+const GameTileContainer: React.FC = () => {
   const [Collection, setCollection] = useState<Game[]>([]);
   const addedGame = useSelector(
     (state: RootState) => state.collection.addedGame
@@ -24,7 +15,7 @@ const CollectionDisplay: React.FC = () => {
       const response = await fetch(collectionApi);
       if (!response.ok) {
         throw new Error(
-          'fetchCollection in CollectionDisplay: network response was not ok!'
+          'fetchCollection in GameTileContainer: network response was not ok!'
         );
       }
       const data: Game[] = await response.json();
@@ -40,7 +31,7 @@ const CollectionDisplay: React.FC = () => {
   }, [addedGame]);
 
   return (
-    <div className="collectionDisplay">
+    <div className="GameTileContainer">
       {Collection.map((game: Game) => (
         <GameTile
           key={game.id}
@@ -56,4 +47,4 @@ const CollectionDisplay: React.FC = () => {
   );
 };
 
-export default CollectionDisplay;
+export default GameTileContainer;

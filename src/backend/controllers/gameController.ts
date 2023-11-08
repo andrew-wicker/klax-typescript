@@ -1,21 +1,11 @@
 import mongoose from 'mongoose';
 import Game from '../../services/models/gameModel.js';
 import { Request, Response } from 'express';
+import { GameData } from '../../types';
 
 const mongoURI: string = process.env.MONGO_URI || '';
 
 mongoose.connect(mongoURI);
-
-interface GameData {
-  bggId: number;
-  title: string;
-  coverImage: string;
-  thumbnail: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
-}
 
 const gameController = {
   createGame: async (req: Request, res: Response, next: Function) => {

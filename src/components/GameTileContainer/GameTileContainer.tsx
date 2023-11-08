@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import GameTile from '../GameTile/GameTile';
 import { useSelector } from 'react-redux';
 import { Game } from '../../types';
+import { RootState } from '../../services/reducers/reducers';
 
 const GameTileContainer: React.FC = () => {
   const [Collection, setCollection] = useState<Game[]>([]);

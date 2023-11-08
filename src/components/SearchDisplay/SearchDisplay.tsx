@@ -6,6 +6,7 @@ import {
 } from '../../services/actions/gameActions';
 import GameTile from '../GameTile/GameTile';
 import { RootState } from '../../services/reducers/reducers';
+import { Modal } from '../Modal/Modal';
 
 const SearchDisplay: React.FC = () => {
   const [gameTitle, setGameTitle] = useState<string>('');

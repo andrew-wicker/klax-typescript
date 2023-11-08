@@ -5,23 +5,25 @@ export interface ErrorInfo {
 }
 
 export interface GameData {
-  bggId: number;
+  bggId: string;
   title: string;
   coverImage: string;
   thumbnail: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
+  descriptions: string;
+  minPlayers: string;
+  maxPlayers: string;
+  yearPublished: string;
 }
 
 export interface GameTileProps {
-  title: string;
-  coverImage: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: number;
+  game: {
+    title: string;
+    coverImage: string;
+    description: string;
+    minPlayers: number;
+    maxPlayers: number;
+    yearPublished: number;
+  };
 }
 
 export interface Game {
@@ -97,7 +99,8 @@ export interface SearchResult {
 }
 
 export interface BoardGame {
-  boardGameTitle: string;
+  boardGameId?: string;
+  boardGameTitle?: string;
   boardGameCoverImage?: string;
   boardGameThumbnail?: string;
   boardGameDescription?: string;

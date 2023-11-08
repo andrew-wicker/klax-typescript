@@ -1,5 +1,5 @@
 import { parseString } from 'xml2js';
-import { SearchResult } from '../../types';
+import { SearchResult } from '../types/types';
 
 export const parseXml = (xml: string): Promise<SearchResult> => {
   return new Promise((resolve, reject) => {

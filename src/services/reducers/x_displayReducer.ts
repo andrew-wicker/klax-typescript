@@ -1,5 +1,5 @@
 import * as types from '../constants/actionTypes';
-import { DisplayState } from '../../types';
+import { DisplayState } from '../types/types';
 
 interface DisplayAction {
   type: string;

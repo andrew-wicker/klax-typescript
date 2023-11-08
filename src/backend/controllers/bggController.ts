@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import xml2js from 'xml2js';
 import fetch from 'node-fetch';
-import { BoardGame, ErrorInfo } from '../../types';
+import { BoardGame, ErrorInfo } from '../../services/types/types';
 
 const createErr = (errInfo: ErrorInfo) => {
   const { method, type, err } = errInfo;

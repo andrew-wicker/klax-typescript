@@ -1,5 +1,5 @@
 import { ADD_GAME_SUCCESSFUL } from '../constants/actionTypes';
-import { Game } from '../../types';
+import { Game } from '../types/types';
 
 export interface CollectionState {
   games: Game[];

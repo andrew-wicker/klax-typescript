@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { IGame } from '../../types';
+import { IGame } from '../types/types';
 
 const gameSchema = new Schema<IGame>({
   bggId: { type: Number, required: true },

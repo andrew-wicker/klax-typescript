@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Game from '../../services/models/gameModel.js';
 import { Request, Response } from 'express';
-import { GameData } from '../../types';
+import { GameData } from '../../services/types/types.js';
 
 const mongoURI: string = process.env.MONGO_URI || '';
 

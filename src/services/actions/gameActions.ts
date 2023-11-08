@@ -8,7 +8,7 @@ import {
   GameData,
   ApiGame,
   BoardGame,
-} from '../../types';
+} from '../types/types';
 import { Dispatch } from 'redux';
 import { parseXml } from '../helpers/parseXml';
 

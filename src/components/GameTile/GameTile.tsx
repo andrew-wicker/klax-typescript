@@ -1,36 +1,31 @@
 import React from 'react';
 import './GameTile.css';
-interface GameTileProps {
-  title: string;
-  coverImage: string;
-  description: string;
-  minPlayers: number;
-  maxPlayers: number;
-  yearPublished: string;
-}
+import { BoardGame } from '../../services/types/types';
 
-const GameTile: React.FC<GameTileProps> = ({
-  title,
-  coverImage,
-  description,
-  minPlayers,
-  maxPlayers,
-  yearPublished,
+const GameTile: React.FC<BoardGame> = ({
+  boardGameId,
+  boardGameTitle,
+  boardGameCoverImage,
+  boardGameThumbnail,
+  boardGameDescription,
+  boardGameMinPlayers,
+  boardGameMaxPlayers,
+  boardGameYearPublished,
 }) => {
   return (
     <div className="gametile">
       <img
-        src={coverImage}
-        alt={`Box art for the board game titled ${title}`}
+        src={boardGameCoverImage}
+        alt={`Box art for the board game titled ${boardGameTitle}`}
       />
       <div className="gametile-info">
-        <h1>{title}</h1>
+        <h1>{boardGameTitle}</h1>
         <p>
-          Players: {minPlayers} to {maxPlayers}
+          Players: {boardGameMinPlayers} to {boardGameMaxPlayers}
         </p>
-        <p>Published: {yearPublished}</p>
+        <p>Published: {boardGameYearPublished}</p>
         <div className="gametile-description">
-          <p>{description}</p>
+          <p>{boardGameDescription}</p>
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
 import { SEARCH_GAME, SET_SEARCH_RESULTS } from '../constants/actionTypes';
+import { BoardGame } from '../types/types';
 
 export interface SearchState {
   isLoading: boolean;
-  titleSelection: string[];
+  titleSelection: BoardGame[];
 }
 
 interface SearchGameAction {
@@ -11,7 +12,7 @@ interface SearchGameAction {
 
 interface SetSearchResultsAction {
   type: typeof SET_SEARCH_RESULTS;
-  payload: string[];
+  payload: BoardGame[];
 }
 
 type SearchActionTypes = SearchGameAction | SetSearchResultsAction;

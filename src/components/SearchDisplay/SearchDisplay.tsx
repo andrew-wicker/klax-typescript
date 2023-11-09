@@ -4,9 +4,10 @@ import {
   searchGameActionCreator,
   setSearchResultsActionCreator,
 } from '../../services/actions/gameActions';
-import GameTile from '../GameTile/GameTile';
 import { RootState } from '../../services/reducers/reducers';
-import { Modal } from '../Modal/Modal';
+import { SearchResult } from '../SearchResult/SearchResult';
+import Modal from 'react-modal';
+import { SearchResultType } from '../../services/types/types';
 
 const SearchDisplay: React.FC = () => {
   const [gameTitle, setGameTitle] = useState<string>('');
@@ -15,6 +16,7 @@ const SearchDisplay: React.FC = () => {
   const titleSelection = useSelector(
     (state: RootState) => state.search.titleSelection
   );
+  console.log(titleSelection);
   const dispatch = useDispatch();
 
   const handleAddToCollection = (): void => {
@@ -29,9 +31,7 @@ const SearchDisplay: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (gameTitle.trim() !== '') {
-      dispatch(searchGameActionCreator(gameTitle)).catch((error: Error) => {
-        console.error(error);
-      });
+      dispatch(searchGameActionCreator(gameTitle));
     }
   };
 
@@ -53,16 +53,19 @@ const SearchDisplay: React.FC = () => {
       >
         <h2>Search Results</h2>
         <div className="search-results">
-          {titleSelection.map((game) => (
-            <div
-              className="search-result-tile"
-              key={game.id}
-            >
-              <GameTile
-                game={game}
-                onAddToCollection={handleAddToCollection}
-              />
-            </div>
+          {titleSelection.map((game: SearchResultType) => (
+            <SearchResult
+              key={game.boardGameId}
+              boardGameId={game.boardGameId}
+              boardGameTitle={game.boardGameTitle}
+              boardGameCoverImage={game.boardGameCoverImage}
+              boardGameThumbnail={game.boardGameThumbnail}
+              boardGameDescription={game.boardGameDescription}
+              boardGameMinPlayers={game.boardGameMinPlayers}
+              boardGameMaxPlayers={game.boardGameMaxPlayers}
+              boardGameYearPublished={game.boardGameYearPublished}
+              onAddToCollection={handleAddToCollection}
+            />
           ))}
         </div>
         <button onClick={closeModal}>X</button>

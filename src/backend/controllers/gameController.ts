@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Game from '../../services/models/gameModel.js';
 import { Request, Response } from 'express';
-import { GameData } from '../../services/types/types.js';
+import { BoardGame } from '../../services/types/types.js';
 
 const mongoURI: string = process.env.MONGO_URI || '';
 
@@ -11,23 +11,25 @@ const gameController = {
   createGame: async (req: Request, res: Response, next: Function) => {
     try {
       const {
-        bggId,
-        title,
-        coverImage,
-        thumbnail,
-        minPlayers,
-        maxPlayers,
-        yearPublished,
-      }: GameData = req.body;
+        boardGameId,
+        boardGameTitle,
+        boardGameCoverImage,
+        boardGameThumbnail,
+        boardGameDescription,
+        boardGameMinPlayers,
+        boardGameMaxPlayers,
+        boardGameYearPublished,
+      }: BoardGame = req.body;
 
       const newGame = new Game({
-        bggId,
-        title,
-        coverImage,
-        thumbnail,
-        minPlayers,
-        maxPlayers,
-        yearPublished,
+        boardGameId,
+        boardGameTitle,
+        boardGameCoverImage,
+        boardGameThumbnail,
+        boardGameDescription,
+        boardGameMinPlayers,
+        boardGameMaxPlayers,
+        boardGameYearPublished,
       });
 
       await newGame.save();

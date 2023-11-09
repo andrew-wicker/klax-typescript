@@ -1,17 +1,21 @@
 import { ADD_GAME_SUCCESSFUL } from '../constants/actionTypes';
-import { Game } from '../types/types';
+import { BoardGame } from '../types/types';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export interface CollectionState {
-  games: Game[];
-  addedGame: Game | null;
+  games: BoardGame[];
+  addedGame: BoardGame | null;
 }
 
-interface AddGameAction {
-  type: typeof ADD_GAME_SUCCESSFUL;
-  payload: Game;
-}
+// interface AddGameAction {
+//   type: typeof ADD_GAME_SUCCESSFUL;
+//   payload: BoardGame;
+// }
 
-type CollectionActionTypes = AddGameAction;
+type CollectionActionTypes = PayloadAction<
+  BoardGame,
+  typeof ADD_GAME_SUCCESSFUL
+>;
 
 const initialState: CollectionState = {
   games: [],

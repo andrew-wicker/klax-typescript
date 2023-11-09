@@ -1,16 +1,15 @@
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as types from '../constants/actionTypes';
-import bggController from '../../backend/controllers/bggController';
-import xml2js from 'xml2js';
-import {
-  ErrorInfo,
-  SearchResult,
-  GameData,
-  ApiGame,
-  BoardGame,
-} from '../types/types';
+// import bggController from '../../backend/controllers/bggController';
+import * as xml2js from 'xml2js';
+import { BoardGame, ErrorInfo, SearchResult } from '../types/types';
 import { Dispatch } from 'redux';
-import { parseXml } from '../helpers/parseXml';
+// import { parseXml } from '../helpers/parseXml';
+
+interface GameFetchError {
+  message: string;
+}
 
 const createErr = (errInfo: ErrorInfo) => {
   const { method, type, err } = errInfo;
@@ -24,51 +23,45 @@ const createErr = (errInfo: ErrorInfo) => {
   };
 };
 
-export const searchGameActionCreator =
-  (gameTitle: string) => async (dispatch: Dispatch) => {
-    try {
-      dispatch({ type: types.SEARCH_GAME });
-      const requestPath: string = `https://boardgamegeek.com/xmlapi2/search?query=${gameTitle}&type=boardgame`;
-
-      const response = await fetch(requestPath);
-      if (!response.ok) {
-        throw new Error('Network response was not ok!');
-      }
-
-      const xmlData = await response.text();
-      const parser = new xml2js.Parser({
-        mergeAttrs: true,
-        normalizeTags: true,
-        normalize: true,
-        explicitArray: false,
-      });
-
-      const jsonData = await parser.parseStringPromise(xmlData);
-      console.log(jsonData);
-      const searchResults: ApiGame[] = Array.isArray(jsonData.items.item)
-        ? jsonData.items.tem
-        : [jsonData.items.item];
-      console.log(searchResults);
-
-      const titleSelection: SearchResult[] = searchResults.map(
-        (searchResult: ApiGame) => {
-          return {
-            id: searchResult.id,
-            title: searchResult.name.value,
-            yearpublished: searchResult.yearpublished.value,
-          };
-        }
-      );
-
-      dispatch(setSearchResultsActionCreator(titleSelection));
-    } catch (error) {
-      return createErr({
-        method: 'Game Search',
-        type: 'Fetch Error',
-        err: error,
-      });
+export const searchGameActionCreator = createAsyncThunk<
+  BoardGame[],
+  string,
+  { rejectValue: GameFetchError }
+>('games/searchGame', async (gameTitle, { rejectWithValue }) => {
+  try {
+    const requestPath = `https://boardgamegeek.com/xmlapi2/search?query=${gameTitle}&type=boardgame`;
+    const response = await fetch(requestPath);
+    if (!response.ok) {
+      throw new Error('Network response was not ok!');
     }
-  };
+    const xmlData = await response.text();
+    const parser = new xml2js.Parser({
+      mergeAttrs: true,
+      normalizeTags: true,
+      normalize: true,
+      explicitArray: false,
+    });
+
+    const jsonData = await parser.parseStringPromise(xmlData);
+    console.log(jsonData);
+    // const searchResults: ApiGame[] = Array.isArray(jsonData.items.item)
+    //   ? jsonData.items.tem
+    //   : [jsonData.items.item];
+
+    const searchResults = jsonData.items.item;
+    console.log(searchResults);
+
+    return searchResults.map((game: BoardGame) => ({
+      id: game.boardGameId,
+      title: game.boardGameTitle,
+      yearPublished: game.boardGameYearPublished,
+    }));
+  } catch (error) {
+    return rejectWithValue({
+      message: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+});
 
 export const setSearchResultsActionCreator = (
   titleSelection: SearchResult[]
@@ -108,15 +101,15 @@ export const gameDetailLookUpActionCreator =
       const yearPublished: string =
         reqGameDataJson.items.item.yearpublished.value;
 
-      const boardgame: GameData = {
-        bggId,
-        title,
-        coverImage,
-        thumbnail,
-        descriptions,
-        minPlayers,
-        maxPlayers,
-        yearPublished,
+      const boardgame: BoardGame = {
+        boardGameId: bggId,
+        boardGameTitle: title,
+        boardGameCoverImage: coverImage,
+        boardGameThumbnail: thumbnail,
+        boardGameDescription: descriptions,
+        boardGameMinPlayers: minPlayers,
+        boardGameMaxPlayers: maxPlayers,
+        boardGameYearPublished: yearPublished,
       };
 
       console.log(boardgame);
@@ -125,7 +118,10 @@ export const gameDetailLookUpActionCreator =
         type: types.GAME_DETAIL_LOOKUP,
         payload: gameId,
       });
-      dispatch(addGameToCollectionActionCreator(boardgame));
+      dispatch({
+        type: types.ADD_GAME_SUCCESSFUL,
+        payload: boardgame,
+      });
     } catch (error) {
       console.log(error);
     }

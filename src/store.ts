@@ -1,29 +1,18 @@
-import { configureStore, ThunkMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import displayReducer from './services/reducers/x_displayReducer';
-import collectionReducer from './services/reducers/collectionReducer';
-import searchReducer from './services/reducers/searchReducer';
-
-type RootReducer = {
-  display: ReturnType<typeof displayReducer>;
-  collection: ReturnType<typeof collectionReducer>;
-  search: ReturnType<typeof searchReducer>;
-};
-
-export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
+import collectionSlice from './services/reducers/collectionSlice';
+import searchSlice from './services/reducers/searchSlice';
 
 export const store = configureStore({
   reducer: {
     display: displayReducer,
-    collection: collectionReducer,
-    search: searchReducer,
+    collection: collectionSlice,
+    search: searchSlice,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      ThunkMiddleware as ThunkMiddleware<RootReducer>
-    ),
 });
 
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

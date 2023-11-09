@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import GameTile from '../GameTile/GameTile';
 import { useSelector } from 'react-redux';
-import { Game } from '../../services/types/types';
+import { BoardGame } from '../../services/types/types';
 import { RootState } from '../../services/reducers/reducers';
 
 const GameTileContainer: React.FC = () => {
-  const [Collection, setCollection] = useState<Game[]>([]);
+  const [Collection, setCollection] = useState<BoardGame[]>([]);
   const addedGame = useSelector(
     (state: RootState) => state.collection.addedGame
   );
@@ -19,7 +19,7 @@ const GameTileContainer: React.FC = () => {
           'fetchCollection in GameTileContainer: network response was not ok!'
         );
       }
-      const data: Game[] = await response.json();
+      const data: BoardGame[] = await response.json();
       setCollection(data);
     } catch (error) {
       console.error(error);
@@ -33,15 +33,15 @@ const GameTileContainer: React.FC = () => {
 
   return (
     <div className="GameTileContainer">
-      {Collection.map((game: Game) => (
+      {Collection.map((game: BoardGame) => (
         <GameTile
-          key={game.id}
-          title={game.title}
-          description={game.description}
-          minPlayers={game.minPlayers}
-          maxPlayers={game.maxPlayers}
-          yearPublished={game.yearPublished}
-          coverImage={game.coverImage}
+          key={game.boardGameId}
+          boardGameTitle={game.boardGameTitle}
+          boardGameDescription={game.boardGameDescription}
+          boardGameMinPlayers={game.boardGameMinPlayers}
+          boardGameMaxPlayers={game.boardGameMaxPlayers}
+          boardGameYearPublished={game.boardGameYearPublished}
+          boardGameCoverImage={game.boardGameCoverImage}
         />
       ))}
     </div>

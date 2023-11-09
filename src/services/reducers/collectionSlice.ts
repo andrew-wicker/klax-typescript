@@ -1,11 +1,14 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAction, PayloadAction } from '@reduxjs/toolkit';
 import { BoardGame } from '../types/types';
-import * as types from '../constants/actionTypes';
 
 interface CollectionState {
   games: BoardGame[];
   addedGame: BoardGame | null;
 }
+
+export const addGameSuccessfulAction = createAction<BoardGame>(
+  'ADD_GAME_SUCCESSFUL'
+);
 
 const initialState: CollectionState = {
   games: [],
@@ -20,12 +23,12 @@ const collectionSlice = createSlice({
       state.games.push(action.payload);
       state.addedGame = action.payload;
     },
-    extraReducers: (builder) => {
-      builder.addCase(types.ADD_GAME_SUCCESSFUL, (state, action) => {
-        state.games.push(action.payload);
-        state.addedGame = action.payload;
-      });
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(addGameSuccessfulAction, (state, action) => {
+      state.games.push(action.payload);
+      state.addedGame = action.payload;
+    });
   },
 });
 

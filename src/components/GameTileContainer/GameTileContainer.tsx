@@ -36,7 +36,9 @@ const GameTileContainer: React.FC = () => {
       {Collection.map((game: BoardGame) => (
         <GameTile
           key={game.boardGameId}
+          boardGameId={game.boardGameId}
           boardGameTitle={game.boardGameTitle}
+          boardGameThumbnail={game.boardGameThumbnail}
           boardGameDescription={game.boardGameDescription}
           boardGameMinPlayers={game.boardGameMinPlayers}
           boardGameMaxPlayers={game.boardGameMaxPlayers}

@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import displayReducer from './services/reducers/x_displayReducer';
+// import displayReducer from '../displayReducer';
 import collectionSlice from './services/reducers/collectionSlice';
 import searchSlice from './services/reducers/searchSlice';
 
 export const store = configureStore({
   reducer: {
-    display: displayReducer,
+    // display: displayReducer,
     collection: collectionSlice,
     search: searchSlice,
   },

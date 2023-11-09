@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as types from '../constants/actionTypes';
 // import bggController from '../../backend/controllers/bggController';
 import * as xml2js from 'xml2js';
-import { BoardGame, ErrorInfo, SearchResult } from '../types/types';
+import { BoardGame, ErrorInfo, SearchResultType } from '../types/types';
 import { Dispatch } from 'redux';
 // import { parseXml } from '../helpers/parseXml';
 
@@ -23,48 +23,56 @@ const createErr = (errInfo: ErrorInfo) => {
   };
 };
 
-export const searchGameActionCreator = createAsyncThunk<
-  BoardGame[],
-  string,
-  { rejectValue: GameFetchError }
->('games/searchGame', async (gameTitle, { rejectWithValue }) => {
-  try {
-    const requestPath = `https://boardgamegeek.com/xmlapi2/search?query=${gameTitle}&type=boardgame`;
-    const response = await fetch(requestPath);
-    if (!response.ok) {
-      throw new Error('Network response was not ok!');
+export const searchGameActionCreator = createAsyncThunk(
+  'search/searchGame',
+  async (gameTitle, { rejectWithValue }) => {
+    try {
+      dispatch({ type: types.SEARCH_GAME });
+
+      const requestPath = `https://boardgamegeek.com/xmlapi2/search?query=${gameTitle}&type=boardgame`;
+
+      const response = await fetch(requestPath);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok!');
+      }
+
+      const xmlData = await response.text();
+
+      const parser = new xml2js.Parser({
+        mergeAttrs: true,
+        normalizeTags: true,
+        normalize: true,
+        explicitArray: false,
+      });
+
+      const jsonData = await parser.parseStringPromise(xmlData);
+      console.log(jsonData);
+      const searchResults = jsonData.items.item;
+      console.log(searchResults, null, 2);
+      // const logthis = JSON.stringify(searchResults, null, 2);
+      // console.log(logthis);
+
+      const titleSelection = [];
+      searchResults.forEach((game) => {
+        const gameObj = {
+          id: game.id,
+          title: game.name ? game.name.value : 'Unknown',
+          yearPublished: game.yearpublished
+            ? game.yearpublished.value
+            : 'Unknown',
+        };
+        titleSelection.push(gameObj);
+        dispatch(setSearchResultsActionCreator(titleSelection));
+      });
+    } catch (error) {
+      console.error(error);
     }
-    const xmlData = await response.text();
-    const parser = new xml2js.Parser({
-      mergeAttrs: true,
-      normalizeTags: true,
-      normalize: true,
-      explicitArray: false,
-    });
-
-    const jsonData = await parser.parseStringPromise(xmlData);
-    console.log(jsonData);
-    // const searchResults: ApiGame[] = Array.isArray(jsonData.items.item)
-    //   ? jsonData.items.tem
-    //   : [jsonData.items.item];
-
-    const searchResults = jsonData.items.item;
-    console.log(searchResults);
-
-    return searchResults.map((game: BoardGame) => ({
-      id: game.boardGameId,
-      title: game.boardGameTitle,
-      yearPublished: game.boardGameYearPublished,
-    }));
-  } catch (error) {
-    return rejectWithValue({
-      message: error instanceof Error ? error.message : 'Unknown error',
-    });
   }
-});
+);
 
 export const setSearchResultsActionCreator = (
-  titleSelection: SearchResult[]
+  titleSelection: SearchResultType[]
 ) => ({
   type: types.SET_SEARCH_RESULTS,
   payload: titleSelection,

@@ -89,6 +89,7 @@ const bggController: {
       const boardGameYearPublished =
         reqGameDataJson.items.item[0].yearpublished[0].value[0];
       const boardgame: BoardGame = {
+        boardGameId: queryId,
         boardGameTitle,
         boardGameCoverImage,
         boardGameThumbnail,

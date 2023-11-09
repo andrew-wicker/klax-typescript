@@ -37,7 +37,7 @@ const searchSlice = createSlice({
       })
       .addCase(searchGameActionCreator.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload?.message || 'Failed to fetch games';
+        state.error = action.payload || 'Failed to fetch games';
       });
   },
 });

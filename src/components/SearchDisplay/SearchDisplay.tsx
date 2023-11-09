@@ -4,10 +4,17 @@ import {
   searchGameActionCreator,
   setSearchResultsActionCreator,
 } from '../../services/actions/gameActions';
-import { RootState } from '../../services/reducers/reducers';
+// import { RootState } from '../../services/reducers/reducers';
 import { SearchResult } from '../SearchResult/SearchResult';
 import Modal from 'react-modal';
-import { SearchResultType } from '../../services/types/types';
+import { BoardGame, SearchResultType } from '../../services/types/types';
+
+interface RootState {
+  search: {
+    isLoading: boolean;
+    titleSelection: BoardGame[];
+  };
+}
 
 const SearchDisplay: React.FC = () => {
   const [gameTitle, setGameTitle] = useState<string>('');
@@ -16,7 +23,6 @@ const SearchDisplay: React.FC = () => {
   const titleSelection = useSelector(
     (state: RootState) => state.search.titleSelection
   );
-  console.log(titleSelection);
   const dispatch = useDispatch();
 
   const handleAddToCollection = (): void => {

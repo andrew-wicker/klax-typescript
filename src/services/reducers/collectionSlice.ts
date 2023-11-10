@@ -6,31 +6,25 @@ interface CollectionState {
   addedGame: BoardGame | null;
 }
 
-export const addGameSuccessfulAction = createAction<BoardGame>(
-  'ADD_GAME_SUCCESSFUL'
-);
-
 const initialState: CollectionState = {
   games: [],
   addedGame: null,
 };
 
+// export const addGameSuccessfulAction = createAction<BoardGame>(
+//   'ADD_GAME_SUCCESSFUL'
+// );
+
 const collectionSlice = createSlice({
   name: 'collection',
   initialState,
   reducers: {
-    addGameSuccessful: (state, action: PayloadAction<BoardGame>) => {
-      state.games.push(action.payload);
+    addGame: (state, action: PayloadAction<BoardGame>) => {
       state.addedGame = action.payload;
+      state.games.push(action.payload);
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(addGameSuccessfulAction, (state, action) => {
-      state.games.push(action.payload);
-      state.addedGame = action.payload;
-    });
   },
 });
 
-export const { addGameSuccessful } = collectionSlice.actions;
+export const { addGame } = collectionSlice.actions;
 export default collectionSlice.reducer;

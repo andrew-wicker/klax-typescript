@@ -8,6 +8,7 @@ import {
 import { SearchResult } from '../SearchResult/SearchResult';
 import Modal from 'react-modal';
 import { BoardGame, SearchResultType } from '../../services/types/types';
+import { addGame } from '../../services/reducers/collectionSlice';
 
 interface RootState {
   search: {
@@ -25,9 +26,13 @@ const SearchDisplay: React.FC = () => {
   );
   const dispatch = useDispatch();
 
-  const handleAddToCollection = (): void => {
-    dispatch(setSearchResultsActionCreator([]));
-    setGameTitle('');
+  // const handleAddToCollection = (): void => {
+  //   dispatch(setSearchResultsActionCreator([]));
+  //   setGameTitle('');
+  // };
+
+  const handleAddGame = (game: BoardGame) => {
+    dispatch(addGame(game));
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -70,7 +75,7 @@ const SearchDisplay: React.FC = () => {
               boardGameMinPlayers={game.boardGameMinPlayers}
               boardGameMaxPlayers={game.boardGameMaxPlayers}
               boardGameYearPublished={game.boardGameYearPublished}
-              onAddToCollection={handleAddToCollection}
+              onAddToCollection={handleAddGame}
             />
           ))}
         </div>

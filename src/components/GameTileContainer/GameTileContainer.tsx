@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import GameTile from '../GameTile/GameTile';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BoardGame } from '../../services/types/types';
 import { RootState } from '../../services/reducers/reducers';
 
 const GameTileContainer: React.FC = () => {
-  const [Collection, setCollection] = useState<BoardGame[]>([]);
+  const [collection, setCollection] = useState<BoardGame[]>([]);
   const addedGame = useSelector(
     (state: RootState) => state.collection.addedGame
   );
@@ -33,7 +33,7 @@ const GameTileContainer: React.FC = () => {
 
   return (
     <div className="GameTileContainer">
-      {Collection.map((game: BoardGame) => (
+      {collection.map((game: BoardGame) => (
         <GameTile
           key={game.boardGameId}
           boardGameId={game.boardGameId}

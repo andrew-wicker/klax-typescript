@@ -63,12 +63,12 @@
 .gametile-description {
   margin-top: 1vh;
   margin-left: 1vw;
-  :-webkit-scrollbar {
+  /* :-webkit-scrollbar {
     display: none;
   }
   :-webkit-scrollbar-track {
     display: none;
-  }
+  } */
   font-weight: 300;
   margin: 1rem;
   line-height: 25px;

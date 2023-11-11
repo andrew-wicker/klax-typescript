@@ -8,7 +8,8 @@ const GameTileContainer: React.FC = () => {
   const games = useSelector((state: RootState) => state.collection.games);
 
   return (
-    <div className="GameTileContainer">
+    // <div className="GameTileContainer">
+    <div className="flex flex-wrap">
       {games.map((game: BoardGame) => (
         <GameTile
           key={game.boardGameId}

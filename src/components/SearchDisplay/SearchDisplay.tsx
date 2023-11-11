@@ -6,7 +6,8 @@ import {
   searchGameActionCreator,
 } from '../../services/reducers/searchSlice';
 import { SearchResult } from '../SearchResult/SearchResult';
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
+import { Modal, Button } from 'react-bootstrap';
 import { BoardGame } from '../../services/types/types';
 import { addGame } from '../../services/reducers/collectionSlice';
 
@@ -73,26 +74,47 @@ const SearchDisplay: React.FC = () => {
   return (
     <div className="search-display">
       <Modal
-        className="modal"
-        isOpen={showModal}
-        onRequestClose={closeModal}
-        contentLabel="Search Results"
+        show={showModal}
+        onHide={closeModal}
       >
-        <h2>Search Results</h2>
-        <div className="search-results">
+        <Modal.Header closeButton>
+          <Modal.Title>Search Results</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
           {titleSelection.length > 0 && (
             <SearchResult
               key={titleSelection[currentSlide].boardGameId}
               {...titleSelection[currentSlide]}
             />
           )}
-          <button onClick={prevSlide}>Previous</button>
-          <button onClick={() => handleAddGame(currentSlide)}>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={prevSlide}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => handleAddGame(currentSlide)}
+          >
             Add Game to Collection
-          </button>
-          <button onClick={nextSlide}>Next</button>
-        </div>
-        <button onClick={closeModal}>Close</button>
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={nextSlide}
+          >
+            Next
+          </Button>
+
+          <Button
+            variant="secondary"
+            onClick={closeModal}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
 
       {titleSelection && titleSelection.length > 0 ? (

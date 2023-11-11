@@ -1,82 +1,50 @@
-@import url('../../styles.css');
-
-.gametile {
-  width: 20vw;
+.bg-image-hover-wrapper {
+  /* width: 20vw; */
   aspect-ratio: 1 / 1;
   background-color: var(--base);
-  background-size: cover;
-  transition: all 0.4s ease-out;
   box-shadow: 0px 35px 77px -17px rgba(0, 0, 0, 0.45);
-  overflow: hidden;
-  color: white;
-  font-family: 'Roboto';
   border-radius: 20px;
+  overflow: hidden;
   position: relative;
-}
-
-.gametile img {
-  width: 100%;
   transition: all 0.4s ease-out;
 }
 
-.gametile:hover {
-  transform: translateX(0);
-  opacity: 1;
+.bg-image-hover {
+  width: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s ease-out;
 }
 
-.gametile:hover .gametile-info {
-  opacity: 1;
-}
-
-.gametile:hover img {
+.bg-image-hover-wrapper:hover .bg-image-hover {
   opacity: 0.2;
 }
 
-.gametile-info {
-  display: flex;
-  flex-direction: column;
+.card-body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 20vw;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-  transition-delay: 0.2s;
-  overflow: scroll;
+  transition: opacity 0.6s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  color: var(--base);
+  font-family: 'Roboto';
+  overflow: hidden;
+  padding: 1rem;
 }
 
-.gametile-info h1 {
-  font-family: 'Roboto Condensed', sans-serif;
-  color: whitesmoke;
-  margin: 0;
-  text-align: center;
-  margin-top: 1vh;
-}
-
-.gametile-info p {
-  margin: 0;
-  font-family: 'Roboto Serif', sans-serif;
-  font-weight: 300;
-  text-align: center;
+.bg-image-hover-wrapper:hover .card-body {
+  opacity: 1;
 }
 
 .gametile-description {
-  margin-top: 1vh;
-  margin-left: 1vw;
-  :-webkit-scrollbar {
-    display: none;
-  }
-  :-webkit-scrollbar-track {
-    display: none;
-  }
   font-weight: 300;
-  margin: 1rem;
   line-height: 25px;
-  height: 270px;
-  transition-delay: 0.2s;
-  overflow: scroll;
-}
-
-.gametile-description p {
-  text-align: left;
+  overflow: auto;
+  height: calc(100% - 2rem);
+  -webkit-scrollbar {
+    display: none;
+  }
 }

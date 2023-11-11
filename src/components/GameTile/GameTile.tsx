@@ -1,5 +1,6 @@
 import React from 'react';
 import './GameTile.css';
+import { Card } from 'react-bootstrap';
 import { BoardGame } from '../../services/types/types';
 
 const GameTile: React.FC<BoardGame> = ({
@@ -13,22 +14,30 @@ const GameTile: React.FC<BoardGame> = ({
   boardGameYearPublished,
 }) => {
   return (
-    <div className="gametile">
-      <img
+    <Card
+      className="bg-image-hover-wrapper"
+      // style={{ width: '20vw', aspectRatio: '1' }}
+    >
+      <Card.Img
+        variant="top"
+        className="bg-image-hover"
         src={boardGameCoverImage}
         alt={`Box art for the board game titled ${boardGameTitle}`}
       />
-      <div className="gametile-info">
-        <h1>{boardGameTitle}</h1>
-        <p>
-          Players: {boardGameMinPlayers} to {boardGameMaxPlayers}
-        </p>
-        <p>Published: {boardGameYearPublished}</p>
-        <div className="gametile-description">
-          <p>{boardGameDescription}</p>
-        </div>
-      </div>
-    </div>
+      <Card.ImgOverlay>
+        <Card.Body>
+          <Card.Title>{boardGameTitle}</Card.Title>
+          <Card.Subtitle>
+            Players: {boardGameMinPlayers} to {boardGameMaxPlayers}
+            <br />
+            Published: {boardGameYearPublished}
+          </Card.Subtitle>
+          <Card.Text className="gametile-description">
+            {boardGameDescription}
+          </Card.Text>
+        </Card.Body>
+      </Card.ImgOverlay>
+    </Card>
   );
 };
 

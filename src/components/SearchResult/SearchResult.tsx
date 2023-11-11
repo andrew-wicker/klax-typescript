@@ -5,15 +5,18 @@ import { SearchResultType } from '../../services/types/types';
 export const SearchResult: React.FC<SearchResultType> = ({
   boardGameId,
   boardGameTitle,
-  boardGameCoverImage,
+  // boardGameCoverImage,
   boardGameThumbnail,
-  boardGameDescription,
-  boardGameMinPlayers,
-  boardGameMaxPlayers,
+  // boardGameDescription,
+  // boardGameMinPlayers,
+  // boardGameMaxPlayers,
   boardGameYearPublished,
 }) => {
   return (
-    <div className="search-result-tile">
+    <div
+      className="search-result-tile"
+      key={boardGameId}
+    >
       <img
         src={boardGameThumbnail}
         alt={`Thumbnail of cover art for board game titled ${boardGameTitle}`}

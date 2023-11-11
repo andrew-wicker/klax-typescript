@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { BoardGame, ErrorInfo } from '../types/types';
-import * as xml2js from 'xml2js';
+// import * as xml2js from 'xml2js';
+import { XMLParser } from 'fast-xml-parser';
+import { gameDetailLookup } from '../helpers/gameDetailLookup';
 
 const createErr = (errInfo: ErrorInfo) => {
   const { method, type, err } = errInfo;
@@ -39,22 +41,28 @@ export const searchGameActionCreator = createAsyncThunk(
       }
 
       const xmlData = await response.text();
-      const parser = new xml2js.Parser({
-        mergeAttrs: true,
-        normalizeTags: true,
-        normalize: true,
-        explicitArray: false,
-      });
 
-      const jsonData = await parser.parseStringPromise(xmlData);
+      const options = {
+        attributeNamePrefix: '',
+        ignoreAttributes: false,
+        parseAttributeValue: true,
+      };
+      const parser = new XMLParser(options);
+      const jsonData = parser.parse(xmlData);
       const searchResults = jsonData.items.item;
+      const selectionIds = searchResults.map((game: any) => game.id);
 
-      const titleSelection = searchResults.map((game: BoardGame) => ({
-        id: game.boardGameId,
-        title: game.boardGameTitle,
-        yearpublished: game.boardGameYearPublished,
-      }));
-      return titleSelection;
+      const titleSelectionPromises = selectionIds.map(async (id: string) => {
+        try {
+          return await gameDetailLookup(id);
+        } catch (error) {
+          console.error('Error in gameDetailLookup:', error);
+          return null;
+        }
+      });
+      const titleSelection = await Promise.all(titleSelectionPromises);
+
+      return titleSelection.filter((game) => game !== null);
     } catch (error) {
       const formattedError = createErr({
         method: 'searchGameActionCreator',
@@ -69,7 +77,11 @@ export const searchGameActionCreator = createAsyncThunk(
 const searchSlice = createSlice({
   name: 'search',
   initialState,
-  reducers: {},
+  reducers: {
+    clearSearchResults: (state) => {
+      state.titleSelection = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(searchGameActionCreator.pending, (state) => {
@@ -91,4 +103,5 @@ const searchSlice = createSlice({
   },
 });
 
+export const { clearSearchResults } = searchSlice.actions;
 export default searchSlice.reducer;

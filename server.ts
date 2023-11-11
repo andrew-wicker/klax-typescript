@@ -1,8 +1,8 @@
 import express, { Express } from 'express';
 import path from 'path';
 import cors from 'cors';
-import apiRouter from './src/backend/routes/api';
-import mongoApi from './src/backend/routes/mongoApi';
+import apiRouter from './src/backend/routes/api.js';
+import mongoRouter from './src/backend/routes/mongoApi.js';
 import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import 'dotenv/config';
@@ -24,7 +24,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/search', apiRouter);
 app.use('/add-game', apiRouter);
-app.use('/get-collection', mongoApi);
+app.use('/get-collection', mongoRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

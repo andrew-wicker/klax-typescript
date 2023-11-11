@@ -1,13 +1,13 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../store';
 import {
+  clearSearchResults,
   searchGameActionCreator,
-  setSearchResultsActionCreator,
-} from '../../services/actions/gameActions';
-// import { RootState } from '../../services/reducers/reducers';
+} from '../../services/reducers/searchSlice';
 import { SearchResult } from '../SearchResult/SearchResult';
 import Modal from 'react-modal';
-import { BoardGame, SearchResultType } from '../../services/types/types';
+import { BoardGame } from '../../services/types/types';
 import { addGame } from '../../services/reducers/collectionSlice';
 
 interface RootState {
@@ -20,19 +20,24 @@ interface RootState {
 const SearchDisplay: React.FC = () => {
   const [gameTitle, setGameTitle] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const isLoading = useSelector((state: RootState) => state.search.isLoading);
   const titleSelection = useSelector(
     (state: RootState) => state.search.titleSelection
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  // const handleAddToCollection = (): void => {
-  //   dispatch(setSearchResultsActionCreator([]));
-  //   setGameTitle('');
-  // };
+  const resetSearch = () => {
+    setGameTitle('');
+    setShowModal(false);
+    setCurrentSlide(0);
+    dispatch(clearSearchResults());
+  };
 
-  const handleAddGame = (game: BoardGame) => {
+  const handleAddGame = (index: number) => {
+    const game = titleSelection[index];
     dispatch(addGame(game));
+    resetSearch();
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -43,6 +48,7 @@ const SearchDisplay: React.FC = () => {
     e.preventDefault();
     if (gameTitle.trim() !== '') {
       dispatch(searchGameActionCreator(gameTitle));
+      setCurrentSlide(0);
     }
   };
 
@@ -52,6 +58,16 @@ const SearchDisplay: React.FC = () => {
 
   const closeModal = (): void => {
     setShowModal(false);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % titleSelection.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(
+      (prev) => (prev - 1 + titleSelection.length) % titleSelection.length
+    );
   };
 
   return (
@@ -64,22 +80,19 @@ const SearchDisplay: React.FC = () => {
       >
         <h2>Search Results</h2>
         <div className="search-results">
-          {titleSelection.map((game: SearchResultType) => (
+          {titleSelection.length > 0 && (
             <SearchResult
-              key={game.boardGameId}
-              boardGameId={game.boardGameId}
-              boardGameTitle={game.boardGameTitle}
-              boardGameCoverImage={game.boardGameCoverImage}
-              boardGameThumbnail={game.boardGameThumbnail}
-              boardGameDescription={game.boardGameDescription}
-              boardGameMinPlayers={game.boardGameMinPlayers}
-              boardGameMaxPlayers={game.boardGameMaxPlayers}
-              boardGameYearPublished={game.boardGameYearPublished}
-              onAddToCollection={handleAddGame}
+              key={titleSelection[currentSlide].boardGameId}
+              {...titleSelection[currentSlide]}
             />
-          ))}
+          )}
+          <button onClick={prevSlide}>Previous</button>
+          <button onClick={() => handleAddGame(currentSlide)}>
+            Add Game to Collection
+          </button>
+          <button onClick={nextSlide}>Next</button>
         </div>
-        <button onClick={closeModal}>X</button>
+        <button onClick={closeModal}>Close</button>
       </Modal>
 
       {titleSelection && titleSelection.length > 0 ? (

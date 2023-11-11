@@ -7,6 +7,8 @@ const mongoURI: string = process.env.MONGO_URI || '';
 
 mongoose.connect(mongoURI);
 
+// const klax = mongoose.connection;
+
 const gameController = {
   createGame: async (req: Request, res: Response, next: Function) => {
     try {

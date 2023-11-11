@@ -46,13 +46,13 @@ export interface ApiGame {
 export interface SearchResultType {
   boardGameId: string;
   boardGameTitle: string;
-  boardGameCoverImage: string;
+  // boardGameCoverImage: string;
   boardGameThumbnail: string;
-  boardGameDescription: string;
-  boardGameMinPlayers: string;
-  boardGameMaxPlayers: string;
+  // boardGameDescription: string;
+  // boardGameMinPlayers: string;
+  // boardGameMaxPlayers: string;
   boardGameYearPublished: string;
-  onAddToCollection?: () => void;
+  onAddToCollection?: (game: BoardGame) => void;
 }
 
 export interface BoardGame {

@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -35,9 +34,7 @@
     "xml2js": "^0.6.2"
   },
   "scripts": {
-    "start": "concurrently \"npm:server\" \"npm:client\"",
-    "server": "nodemon --exec ts-node server.ts",
-    "client": "PORT=8080 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
